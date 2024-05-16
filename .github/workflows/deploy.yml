@@ -1,0 +1,35 @@
+name: Deploy the website to S3 Bucket
+
+on:
+  push:
+    tags:
+      - 'release-*'
+
+jobs:
+  Deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js and Yarn
+        uses: actions/setup-node@vv
+        with:
+          node-version: 18
+          cache: yarn
+
+      - name: 📥 Install Dependencies
+        run: npm install
+
+      - name: 🛠️ Build App
+        run: yarn build
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Deploy static site to S3 bucket
+        run: aws s3 sync ./dist ${{ secrets.AWS_S3_NAME }} --delete --acl public-read
