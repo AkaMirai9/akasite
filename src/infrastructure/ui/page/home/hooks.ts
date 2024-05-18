@@ -6,6 +6,7 @@ const useHomePageData = () => {
 
   const launchHelloAnimation = () =>
     helloTimeLine
+      .to('.hello', { opacity: 1, duration: 0 })
       .fromTo('.h', { x: -1000, y: 500, rotation: 200 }, { x: 0, y: 0, duration: 1, rotation: 0, ease: 'expo' })
       .fromTo(
         '.e',
