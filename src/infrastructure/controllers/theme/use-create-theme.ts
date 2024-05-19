@@ -7,6 +7,7 @@ const useCreateTheme = (): UseCreateThemeProps => {
   const theme = useMemo(() => {
     const typoStd = {
       fontFamily: [
+        'Ubuntu Mono',
         'Poppins',
         'Rubik-var',
         '-apple-system',

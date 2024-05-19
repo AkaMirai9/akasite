@@ -14,7 +14,9 @@ module.exports = {
       rules: {
         'react/react-in-jsx-scope': 'off',
         'no-void': 'off',
-        '@typescript-eslint/comma-dangle': ["error", "never"]
+        '@typescript-eslint/comma-dangle': ["error", "never"],
+        'react/function-component-definition': 'off',
+        'react/jsx-props-no-spreading': 'off'
       },
       extends: [
         'eslint:recommended',

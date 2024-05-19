@@ -1,3 +1,4 @@
+import initI18n from 'infrastructure/controllers/translation/i18n';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import 'infrastructure/ui/index.css';
@@ -39,6 +40,8 @@ gsap.registerPlugin(
   SlowMo,
   CustomEase
 );
+
+initI18n();
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
