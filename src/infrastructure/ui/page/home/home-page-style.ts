@@ -42,8 +42,12 @@ const HomePageStyle = {
     height: 'fit-content',
     alignItems: 'center',
     justifyContent: 'center',
+    marginY: 'auto',
     flexWrap: 'wrap',
     gap: '2rem',
+    '@media (min-width: 608px)': {
+      maxHeight: '600px'
+    },
     '@media (max-width: 1301px)': {
       maxWidth: '600px'
     }
