@@ -15,7 +15,7 @@ const HomePageStyle = {
     opacity: 0,
     display: 'flex',
     '@media (max-width: 600px)': {
-      fontSize: '7rem'
+      fontSize: '5rem'
     },
     '@media (min-width: 601px)': {
       fontSize: '15rem'
@@ -38,16 +38,14 @@ const HomePageStyle = {
     flex: 1,
     marginTop: '2rem',
     marginBottom: '2rem',
-    maxWidth: '600px',
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))',
-    gridAutoRows: 'auto',
+    display: 'flex',
+    height: 'fit-content',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexWrap: 'wrap',
     gap: '2rem',
-    '@media (max-width: 600px)': {
-      gridTemplateColumns: '1fr'
-    },
-    '@media (min-width: 601px)': {
-      gridTemplateColumns: 'repeat(2, 1fr)'
+    '@media (max-width: 1301px)': {
+      maxWidth: '600px'
     }
   } as SxProps
 };
