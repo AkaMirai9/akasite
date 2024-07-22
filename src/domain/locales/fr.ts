@@ -26,17 +26,23 @@ const frTranslation = {
       biotech: {
         title: 'Lycée Douai Wagnonville',
         duration: '2016 - 2019',
-        description: 'Stuff'
+        cursus: 'Bac Général Série S',
+        description: 'Stuff',
+        asset: ''
       },
       robes: {
         title: 'Lycée Robespierre',
         duration: '2019 - 2021',
-        description: 'Stuff'
+        cursus: 'Classe CPGE MPSI/MP',
+        description: 'Stuff',
+        asset: ''
       },
       epita: {
         title: 'EPITA',
         duration: '2021 - 2024',
-        description: 'Stuff'
+        cursus: 'Diplôme d\'ingénieur spécialité Médias et Technologies de l\'Information (MTI)',
+        description: 'Stuff',
+        asset: ''
       }
     }
   },

@@ -13,10 +13,10 @@ const educationPageStyle = {
 
   content: {
     flex: 1,
-    marginTop: '3rem',
+    marginTop: '6rem',
     display: 'flex',
     flexDirection: 'column',
-    gap: '2rem'
+    gap: '4rem'
   } as SxProps
 };
 
