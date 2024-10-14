@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Parallax, Background } from 'react-parallax'
-import { Menu, X, Code, Briefcase, User, Mail, Github, Linkedin, Twitter, ExternalLink } from 'lucide-react'
+import { Menu, X, Code, Briefcase, User, Mail, Github, Linkedin, ExternalLink } from 'lucide-react'
 import './App.css'
 import Peaks from './components/peaks';
 import HomePng from 'assets/home.png'
