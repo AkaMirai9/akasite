@@ -91,3 +91,14 @@
         background-position: 0 50%;
     }
 }
+
+.responsive-bg {
+    width: 110vw;
+    height: auto;
+}
+
+@media (max-width: 768px) {
+    .responsive-bg {
+        width: 400vw;
+    }
+}

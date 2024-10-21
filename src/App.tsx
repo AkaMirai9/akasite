@@ -35,10 +35,12 @@ const projects = [
   },
 ]
 
+// Importations et définition des sections et projets (inchangé)
+
 export default function Component() {
-  const [activeSection, setActiveSection] = useState('home')
-  const [menuOpen, setMenuOpen] = useState(false)
-  const [expandedProject, setExpandedProject] = useState<number | null>(null)
+  const [activeSection, setActiveSection] = useState('home');
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [expandedProject, setExpandedProject] = useState<number | null>(null);
 
   const handleScroll = (id: string) => {
     const element = document.getElementById(id);
@@ -49,28 +51,27 @@ export default function Component() {
 
   useEffect(() => {
     const handleScrollEvent = () => {
-      const scrollPosition = window.scrollY
-      const windowHeight = window.innerHeight
-      const activeSection = sections.find((section, index) => {
-        const el = document.getElementById(section.id)
+      const windowHeight = window.innerHeight;
+      const activeSection = sections.find((section) => {
+        const el = document.getElementById(section.id);
         if (el) {
-          const rect = el.getBoundingClientRect()
-          return rect.top <= windowHeight / 2 && rect.bottom >= windowHeight / 2
+          const rect = el.getBoundingClientRect();
+          return rect.top <= windowHeight / 2 && rect.bottom >= windowHeight / 2;
         }
-        return false
-      })
+        return false;
+      });
       if (activeSection) {
-        setActiveSection(activeSection.id)
+        setActiveSection(activeSection.id);
       }
-    }
+    };
 
-    window.addEventListener('scroll', handleScrollEvent)
-    return () => window.removeEventListener('scroll', handleScrollEvent)
-  }, [])
+    window.addEventListener('scroll', handleScrollEvent);
+    return () => window.removeEventListener('scroll', handleScrollEvent);
+  }, []);
 
   const toggleProjectExpansion = (projectId: number) => {
-    setExpandedProject(expandedProject === projectId ? null : projectId)
-  }
+    setExpandedProject(expandedProject === projectId ? null : projectId);
+  };
 
   return (
     <div className="min-h-screen bg-gray-900 text-gray-100">
@@ -78,7 +79,7 @@ export default function Component() {
         <div className="container mx-auto px-4 py-4">
           <div className="flex justify-between items-center">
             <motion.h1
-              className="text-2xl font-bold relative"
+              className="text-2xl md:text-3xl font-bold relative" // Responsive font size
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}>
@@ -92,6 +93,7 @@ export default function Component() {
                 transition={{ duration: 0.5, delay: 0.2 }}
               />
             </motion.h1>
+            {/* Navigation pour grands écrans */}
             <nav className="hidden md:block">
               <ul className="flex space-x-6">
                 {sections.map((section) => (
@@ -101,8 +103,8 @@ export default function Component() {
                         activeSection === section.id ? 'text-purple-400' : 'text-gray-300 hover:text-purple-400'
                       }`}
                       onClick={(e) => {
-                        e.preventDefault(); // Évitez le comportement par défaut
-                        handleScroll(section.id); // Appelez la fonction pour faire défiler
+                        e.preventDefault();
+                        handleScroll(section.id);
                       }}
                     >
                       <section.icon className="w-5 h-5" />
@@ -118,6 +120,7 @@ export default function Component() {
                 ))}
               </ul>
             </nav>
+            {/* Bouton de menu hamburger pour petits écrans */}
             <button className="md:hidden relative w-8 h-8" onClick={() => setMenuOpen(!menuOpen)}>
               <motion.span
                 className="absolute inset-0 flex items-center justify-center text-purple-400"
@@ -134,54 +137,38 @@ export default function Component() {
             </button>
           </div>
         </div>
-        <motion.nav
-          className="md:hidden bg-gray-800 bg-opacity-95 backdrop-blur-sm"
-          initial={false}
-          animate={menuOpen ? { height: 'auto', opacity: 1 } : { height: 0, opacity: 0 }}
-          transition={{ duration: 0.3 }}>
-          <ul className="flex flex-col items-center py-4 space-y-4">
-            {sections.map((section) => (
-              <motion.li key={section.id} whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>
-                <a
-                  href={`#${section.id}`}
-                  className={`flex items-center space-x-2 ${
-                    activeSection === section.id ? 'text-purple-400' : 'text-gray-300 hover:text-purple-400'
-                  }`}
-                  onClick={() => setMenuOpen(false)}>
-                  <section.icon className="w-6 h-6" />
-                  <span>{section.title}</span>
-                </a>
-              </motion.li>
-            ))}
-          </ul>
-        </motion.nav>
+
+        {/* Menu mobile */}
+        {menuOpen && (
+          <motion.nav
+            className="fixed inset-0 z-40 bg-gray-800 bg-opacity-95 backdrop-blur-sm"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}>
+            <ul className="flex flex-col items-center justify-center h-full space-y-8">
+              {sections.map((section) => (
+                <motion.li key={section.id} whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>
+                  <a
+                    href={`#${section.id}`}
+                    className={`flex items-center space-x-2 text-2xl ${
+                      activeSection === section.id ? 'text-purple-400' : 'text-gray-300 hover:text-purple-400'
+                    }`}
+                    onClick={() => {
+                      setMenuOpen(false);
+                      handleScroll(section.id);
+                    }}>
+                    <section.icon className="w-6 h-6" />
+                    <span>{section.title}</span>
+                  </a>
+                </motion.li>
+              ))}
+            </ul>
+          </motion.nav>
+        )}
       </header>
 
-      {menuOpen && (
-        <motion.nav
-          className="fixed inset-0 z-40 bg-gray-800 bg-opacity-95 backdrop-blur-sm md:hidden"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}>
-          <ul className="flex flex-col items-center justify-center h-full space-y-8">
-            {sections.map((section) => (
-              <motion.li key={section.id} whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>
-                <a
-                  href={`#${section.id}`}
-                  className={`flex items-center space-x-2 text-2xl ${
-                    activeSection === section.id ? 'text-purple-400' : 'text-gray-300 hover:text-purple-400'
-                  }`}
-                  onClick={() => setMenuOpen(false)}>
-                  <section.icon className="w-6 h-6" />
-                  <span>{section.title}</span>
-                </a>
-              </motion.li>
-            ))}
-          </ul>
-        </motion.nav>
-      )}
-
       <main>
+        {/* Section accueil avec effet parallax */}
         <Parallax strength={500}>
           <Background>
             <div className="blobs-container">
@@ -190,9 +177,9 @@ export default function Component() {
             </div>
           </Background>
           <section id="home" className="min-h-screen flex items-center justify-center">
-            <div className="text-center">
+            <div className="text-center px-4">
               <motion.h2
-                className="text-5xl md:text-7xl font-bold mb-4"
+                className="text-4xl sm:text-5xl md:text-7xl font-bold mb-4"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8 }}>
@@ -207,8 +194,8 @@ export default function Component() {
               </motion.p>
               <motion.a
                 onClick={(e) => {
-                  e.preventDefault(); // Évitez le comportement par défaut
-                  handleScroll("contact"); // Appelez la fonction pour faire défiler
+                  e.preventDefault();
+                  handleScroll("contact");
                 }}
                 className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-6 rounded-full inline-block transition duration-300"
                 whileHover={{ scale: 1.05 }}
@@ -219,10 +206,11 @@ export default function Component() {
           </section>
         </Parallax>
 
+        {/* Section projets */}
         <section id="projects" className="min-h-screen pt-20 bg-gray-800">
           <div className="container mx-auto px-4">
             <h2 className="text-4xl font-bold mb-12 text-center">Projects</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
               {projects.map((project) => (
                 <motion.div
                   key={project.id}
@@ -235,7 +223,7 @@ export default function Component() {
                   <AnimatePresence>
                     {expandedProject === project.id ? (
                       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-                        <div className="flex gap-4">
+                        <div className="flex flex-col-md:flex-row gap-4">
                           <div className="flex-1 flex flex-col justify-between">
                             <p className="text-gray-300 mb-4">{project.fullDescription}</p>
                             <div className="mb-4">
@@ -259,8 +247,7 @@ export default function Component() {
                                 key={index}
                                 src={image}
                                 alt={`${project.title} screenshot ${index + 1}`}
-                                width={200}
-                                className="rounded-lg"
+                                className="w-full h-auto rounded-lg"
                               />
                             ))}
                           </div>
@@ -276,9 +263,10 @@ export default function Component() {
           </div>
         </section>
 
+        {/* Section à propos */}
         <Parallax strength={200}>
           <Background>
-            <div style={{ width: '110vw' }}>
+            <div className="responsive-bg">
               <Peaks />
             </div>
           </Background>
@@ -320,6 +308,7 @@ export default function Component() {
           </section>
         </Parallax>
 
+        {/* Section contact */}
         <section id="contact" className="min-h-screen py-20 bg-gray-800">
           <div className="container mx-auto px-4">
             <h2 className="text-4xl font-bold mb-12 text-center">Get in Touch</h2>
